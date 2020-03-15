@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="text-center">
+    <b><label>Cache Result</label></b><p><label id="message">@ViewBag.redisMessage</label></p>
+
+    <input type="button" value="Add or Update Redis Time Cache"  onclick="updateCacheKey();" />
+    <input type="button" value="Delete Redis Time Cache" onclick="deleteCacheKey();" />
+</div>
+
+<script>
+    function updateCacheKey() {
+        $.ajax({
+            type: "POST",
+            url: "/Home/UpdateKey",
+            processData: false,
+            data: "",
+            dataType: 'json',
+            contentType: false,
+            success: function (response) {
+                console.log(response);
+                $("#message").text(response.message);
+            },
+            error: function (err, type, httpStatus) {
+                console.log(err.responseJSON.message);
+                window.location = '/Home/Index';
+            }
+        });
+    }
+
+    function deleteCacheKey() {
+        $.ajax({
+            type: "POST",
+            url: "/Home/DeleteKey",
+            processData: false,
+            data: "",
+            dataType: 'json',
+            contentType: false,
+            success: function (response) {
+                console.log(response);
+                $("#message").text(response.message);
+            },
+            error: function (err, type, httpStatus) {
+                console.log(err.responseJSON.message);
+                window.location = '/Home/Index';
+            }
+        });
+    }
+</script>
